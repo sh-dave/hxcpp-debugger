@@ -36,15 +36,24 @@
 		"vscode-debugadapter": "1.8.0-pre.4"
 	},
 	"devDependencies": {
-		"lix": "^15.3.0-alpha.1",
-		"mocha": "^2.4.5",
-		"typescript": "^1.8.5"
+		"lix": "^15.3.0-alpha.1"
 	},
 	"scripts": {
 		"vscode:prepublish": "npx haxe build.hxml",
-		"postinstall": "npx lix download && npx haxelib dev hxcpp-debug-server ./hxcpp-debug-server"
+		"postinstall": "npx lix download"
 	},
+	"main": "bin/extension.js",
+	"activationEvents": [
+		"onCommand:hxcpp-debugger.setup"
+	],
 	"contributes": {
+		"commands": [
+			{
+				"title": "Setup",
+				"command": "hxcpp-debugger.setup",
+				"category": "HXCPP Debugger"
+			}
+		],
 		"debuggers": [
 			{
 				"type": "hxcpp",

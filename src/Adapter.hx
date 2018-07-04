@@ -1,3 +1,4 @@
+import haxe.io.Path;
 import protocol.debug.Types;
 import js.node.Buffer;
 import js.node.Net;
@@ -10,11 +11,10 @@ import hxcpp.debug.jsonrpc.Protocol;
 typedef HxppLaunchRequestArguments = {
     >protocol.debug.Types.LaunchRequestArguments,
     var program:String;
-    var workingDirectory:String;
 }
 
 @:keep
-class Main extends adapter.DebugSession {
+class Adapter extends adapter.DebugSession {
 
     function traceToOutput(value:Dynamic, ?infos:haxe.PosInfos) {
         var msg = value;
@@ -51,7 +51,6 @@ class Main extends adapter.DebugSession {
     override function launchRequest(response:LaunchResponse, args:LaunchRequestArguments) {
         var args:HxppLaunchRequestArguments = cast args;
         var executable = args.program;
-        var workingDirectory = args.workingDirectory;
 
         function onConnected(socket) {
             trace("Debug server connected!");
@@ -72,7 +71,7 @@ class Main extends adapter.DebugSession {
         server.listen(6972, function() {
             var port = server.address().port;
             var args = [];
-            var haxeProcess = ChildProcess.spawn(executable, args, {stdio: Pipe, cwd: workingDirectory});
+            var haxeProcess = ChildProcess.spawn(executable, args, {stdio: Pipe, cwd: Path.directory(executable)});
             haxeProcess.stdout.on(ReadableEvent.Data, onStdout);
             haxeProcess.stderr.on(ReadableEvent.Data, onStderr);
             haxeProcess.on(ChildProcessEvent.Exit, onExit);
@@ -277,6 +276,6 @@ class Main extends adapter.DebugSession {
     }
 
     static function main() {
-        adapter.DebugSession.run(Main);
+        adapter.DebugSession.run(Adapter);
     }
 }
