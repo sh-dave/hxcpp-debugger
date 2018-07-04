@@ -1,0 +1,3 @@
+-D vscode-debugadapter=0.0.1
+# @install: lix --silent download "gh://github.com/vshaxe/vscode-debugadapter-extern#03bcde23ffefdf9491fa0080e2393792a906d1f2" into vscode-debugadapter/0.0.1/github/03bcde23ffefdf9491fa0080e2393792a906d1f2
+-cp ${HAXE_LIBCACHE}/vscode-debugadapter/0.0.1/github/03bcde23ffefdf9491fa0080e2393792a906d1f2/src

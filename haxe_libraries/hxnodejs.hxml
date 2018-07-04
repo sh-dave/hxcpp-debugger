@@ -1,0 +1,6 @@
+-D hxnodejs=6.9.0
+# @install: lix --silent download "gh://github.com/haxefoundation/hxnodejs#aad90f2afdb7043165efbaecf45f99a582fe7e52" into hxnodejs/6.9.0/github/aad90f2afdb7043165efbaecf45f99a582fe7e52
+-cp ${HAXE_LIBCACHE}/hxnodejs/6.9.0/github/aad90f2afdb7043165efbaecf45f99a582fe7e52/src
+--macro allowPackage('sys')
+# should behave like other target defines and not be defined in macro context
+--macro define('nodejs')
