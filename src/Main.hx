@@ -10,6 +10,7 @@ import hxcpp.debug.jsonrpc.Protocol;
 typedef HxppLaunchRequestArguments = {
     >protocol.debug.Types.LaunchRequestArguments,
     var program:String;
+    var workingDirectory:String;
 }
 
 @:keep
@@ -50,6 +51,7 @@ class Main extends adapter.DebugSession {
     override function launchRequest(response:LaunchResponse, args:LaunchRequestArguments) {
         var args:HxppLaunchRequestArguments = cast args;
         var executable = args.program;
+        var workingDirectory = args.workingDirectory;
 
         function onConnected(socket) {
             trace("Debug server connected!");
@@ -70,7 +72,7 @@ class Main extends adapter.DebugSession {
         server.listen(6972, function() {
             var port = server.address().port;
             var args = [];
-            var haxeProcess = ChildProcess.spawn(executable, args, {stdio: Pipe});
+            var haxeProcess = ChildProcess.spawn(executable, args, {stdio: Pipe, cwd: workingDirectory});
             haxeProcess.stdout.on(ReadableEvent.Data, onStdout);
             haxeProcess.stderr.on(ReadableEvent.Data, onStderr);
             haxeProcess.on(ChildProcessEvent.Exit, onExit);

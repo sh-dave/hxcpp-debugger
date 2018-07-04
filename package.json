@@ -70,6 +70,11 @@
 								"type": "bool",
 								"description": "redirect adapter log to debug console",
 								"default": false
+							},
+							"workingDirectory": {
+								"type": "string",
+								"description": "The application's working directory.",
+								"default": "${workspaceRoot}/bin"
 							}
 						}
 					},
